@@ -76,9 +76,9 @@ def update_ticket(ticket_id: int, data: TicketUpdate, user=Depends(require_admin
 def get_comments(ticket_id: int, user=Depends(get_current_user)):
     conn = get_conn()
     rows = conn.execute(
-        """SELECT c.id, c.text, c.created_at, u.name AS author
+        """SELECT  c.id, c.text, c.created_at, u.name AS author
            FROM comments c JOIN users u ON u.id = c.user_id
-           WHERE c.ticket_id = ? ORDER BY c.id""",
+           WHERE c.ticket_id = ? ORDER BY c.id""",  
         (ticket_id,),
     ).fetchall()
     conn.close()
